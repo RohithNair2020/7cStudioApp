@@ -1,0 +1,38 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 7px;
+    border: var(--app-border);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.card-subheader {
+    font-size: 14px;
+    color: var(--app-text-lighter);
+}
+
+.card-title {
+    font-size: 28px;
+}
+
+.card-footer {
+    display: flex;
+    gap: 7px;
+    font-size: 14px;
+}
+
+.growth-arrow {
+    font-size: 10px;
+    margin-right: 5px;
+}
+
+.green {
+    color: #52c41a;
+}
+
+.green-text {
+    display: flex;
+    align-items: center;
+}

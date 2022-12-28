@@ -1,0 +1,14 @@
+.stats {
+    padding: 20px 20px 0;
+}
+
+.stats-header {
+    padding: 0 0 20px 0;
+}
+
+.cards-group {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    padding: 0 0 40px 0;
+}

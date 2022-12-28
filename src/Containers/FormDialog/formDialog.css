@@ -1,0 +1,96 @@
+.form-dialog {
+    visibility: hidden;
+}
+
+.form-dialog-container {
+    padding: 10px 30px;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-unit {
+    padding: 20px 0;
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.input-unit {
+    flex: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    height: 32px;
+    border: var(--app-border);
+    border-radius: 2px;
+    margin-top: 5px;
+    outline: none;
+}
+
+.text-area {
+    height: 54px;
+}
+
+.input-label {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+#text-area-unit {
+    flex: 100%;
+}
+
+.checkbox-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-delete-icon {
+    cursor: pointer;
+}
+
+.photo-and-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgb(25, 99, 204);
+}
+
+.image-display-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    gap: 10px;
+    border: var(--app-border);
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.selected-image {
+    height: 50px;
+    width: auto;
+}
+
+.form-buttons-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.file-upload-btn {
+    display: flex;
+    align-items: center;
+    border: var(--app-border);
+    max-width: fit-content;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 2px;
+}

@@ -1,0 +1,13 @@
+.page-container {
+    flex: 0.8;
+    height: 100vh;
+}
+
+.header-heading {
+    align-self: center;
+}
+
+.header-buttons-group {
+    display: flex;
+    gap: 10px;
+}

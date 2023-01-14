@@ -3,6 +3,7 @@
     flex-direction: column;
     flex: 0.2;
     padding-top: 32px;
+    position: relative;
     border-right: var(--app-border);
 }
 
@@ -16,6 +17,7 @@
     text-decoration: none;
 }
 
-.menu-list-item {
-    border-right: 3px solid red;
+.stick-to-bottom {
+    position: absolute;
+    bottom: 0;
 }

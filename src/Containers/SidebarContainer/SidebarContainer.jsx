@@ -7,6 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
+import LogoutIcon from '@mui/icons-material/Logout';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AlbumIcon from '@mui/icons-material/Album';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -28,8 +29,10 @@ const SidebarContainer = () => {
     React.useEffect(() => {
         if (location.pathname === '/dashboard') {
             setSelected(1);
-        } else if (location.pathname === '/artists') {
+        } else if (location.pathname === '/dashboard/artists') {
             setSelected(2);
+        } else if (location.pathname === '/dashboard/songs') {
+            setSelected(3);
         }
     }, [location]);
     return (
@@ -46,7 +49,7 @@ const SidebarContainer = () => {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
             >
-                <Link className="router-link" to="dashboard">
+                <Link className="router-link" to="/dashboard">
                     <ListItemButton
                         className="menu-list-item"
                         onClick={() => setSelected(1)}
@@ -74,13 +77,9 @@ const SidebarContainer = () => {
                     <ListItemText primary="Content Uploaders" />
                     {uploaderOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
-                <Collapse
-                    in={uploaderOpen || location.pathname === '/artists'}
-                    timeout="auto"
-                    unmountOnExit
-                >
+                <Collapse in={uploaderOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <Link className="router-link" to="artists">
+                        <Link className="router-link" to="/dashboard/artists">
                             <ListItemButton
                                 sx={{
                                     pl: 4,
@@ -98,7 +97,7 @@ const SidebarContainer = () => {
                                 <ListItemText primary="Artists" />
                             </ListItemButton>
                         </Link>
-                        <ListItemButton>
+                        <ListItemButton sx={{ px: 4 }}>
                             <ListItemText primary="Podcasts" />
                         </ListItemButton>
                     </List>
@@ -115,12 +114,33 @@ const SidebarContainer = () => {
                 </ListItemButton>
                 <Collapse in={contentOpen} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemText primary="Playlists" />
-                        </ListItemButton>
+                        <Link className="router-link" to="/dashboard/songs">
+                            <ListItemButton
+                                sx={{
+                                    pl: 4,
+                                    borderRight:
+                                        selected === 3
+                                            ? '6px solid #1890FF'
+                                            : '',
+                                    backgroundColor:
+                                        selected === 3 ? '#E6F7FF' : '',
+                                    boxSizing: 'border-box',
+                                }}
+                            >
+                                <ListItemText primary="Songs" />
+                            </ListItemButton>
+                        </Link>
                     </List>
                 </Collapse>
             </List>
+            <Link className="router-link stick-to-bottom" to="/login">
+                <ListItemButton>
+                    <ListItemIcon>
+                        <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                </ListItemButton>
+            </Link>
         </div>
     );
 };

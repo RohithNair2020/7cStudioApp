@@ -1,21 +1,25 @@
 import React from 'react';
 import './pageContainer.css';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import DashboardContainer from '../DashboardContainer/DashboardContainer';
 import ArtistsContainer from '../ArtistsContainer/ArtistsContainer';
 import { Breadcrumbs, Collapse, Link } from '@mui/material';
 
 const PageContainer = () => {
     const [open, setOpen] = React.useState(false);
-    const currentPath = useLocation();
+    const { pathname } = useLocation();
+    console.log('pathname', pathname);
 
     React.useEffect(() => {
-        if (currentPath.pathname === '/artists') {
+        if (
+            pathname === '/dashboard/artists' ||
+            pathname === '/dashboard/songs'
+        ) {
             setOpen(true);
         } else {
             setOpen(false);
         }
-    }, [currentPath]);
+    }, [pathname]);
     return (
         <div className="page-container">
             <Collapse in={open}>
@@ -57,12 +61,7 @@ const PageContainer = () => {
                     </Breadcrumbs>
                 </div>
             </Collapse>
-            <Routes>
-                <Route path="/" element={<Navigate to="dashboard" />} />
-                <Route path="dashboard" element={<DashboardContainer />} />
-                <Route path="artists" element={<ArtistsContainer />} />
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <Outlet />
         </div>
     );
 };

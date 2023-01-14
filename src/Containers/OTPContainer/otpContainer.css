@@ -1,0 +1,25 @@
+.otp-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.otp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+.otp-form-link {
+    color: #552583;
+    text-decoration: none;
+    cursor: pointer;
+    align-self: center;
+}
+
+.self-center {
+    align-self: center;
+}

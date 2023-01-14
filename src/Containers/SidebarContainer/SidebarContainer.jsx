@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './sidebarContainer.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -13,12 +13,15 @@ import AlbumIcon from '@mui/icons-material/Album';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import useStore from '../../store';
 
 const SidebarContainer = () => {
     const [contentOpen, setContentOpen] = useState(false);
     const [uploaderOpen, setUploaderOpen] = useState(false);
     const [selected, setSelected] = useState(1);
+    const setToken = useStore((state) => state.setToken);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const handleContentClick = () => {
         setContentOpen(!contentOpen);
@@ -26,6 +29,15 @@ const SidebarContainer = () => {
     const handleUploaderClick = () => {
         setUploaderOpen(!uploaderOpen);
     };
+
+    const logout = () => {
+        console.log('hit');
+        localStorage.removeItem('token');
+        setToken(null);
+
+        // navigate('/dashboard');
+    };
+
     React.useEffect(() => {
         if (location.pathname === '/dashboard') {
             setSelected(1);
@@ -133,14 +145,12 @@ const SidebarContainer = () => {
                     </List>
                 </Collapse>
             </List>
-            <Link className="router-link stick-to-bottom" to="/login">
-                <ListItemButton>
-                    <ListItemIcon>
-                        <LogoutIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                </ListItemButton>
-            </Link>
+            <ListItemButton onClick={logout}>
+                <ListItemIcon>
+                    <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+            </ListItemButton>
         </div>
     );
 };

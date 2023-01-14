@@ -7,27 +7,57 @@ import DashboardContainer from './Containers/DashboardContainer/DashboardContain
 import ArtistsContainer from './Containers/ArtistsContainer/ArtistsContainer';
 import SongsContainer from './Containers/SongsContainer/SongsContainer';
 import OTPContainer from './Containers/OTPContainer/OTPContainer';
+import { useEffect, useState } from 'react';
+import useStore from './store';
 
 function App() {
+    const token = useStore((state) => state.token);
+    console.log('zus tok', token);
+
     return (
         <div className="app">
             <Routes>
-                <Route path="/login" element={<LoginContainer />} />
+                <Route
+                    path="/login"
+                    element={
+                        token ? (
+                            <Navigate to="/dashboard" />
+                        ) : (
+                            <LoginContainer />
+                        )
+                    }
+                />
                 <Route path="/authenticate" element={<OTPContainer />} />
+                {/* <PrivateRoute user={{ token: localStorage.getItem('token') }}>
+                    <AppContainer user={user} />
+                </PrivateRoute> */}
                 <Route
                     path="/dashboard"
                     element={
-                        <>
-                            <SidebarContainer />
-                            <PageContainer />
-                        </>
+                        token ? (
+                            <>
+                                <SidebarContainer />
+                                <PageContainer />
+                            </>
+                        ) : (
+                            <Navigate to="/login" />
+                        )
                     }
                 >
                     <Route index element={<DashboardContainer />} />
                     <Route path="artists" element={<ArtistsContainer />} />
                     <Route path="songs" element={<SongsContainer />} />
                 </Route>
-                <Route path="*" element={<Navigate to="/dashboard" />} />
+                <Route
+                    path="*"
+                    element={
+                        token ? (
+                            <Navigate to="/dashboard" />
+                        ) : (
+                            <Navigate to="/login" />
+                        )
+                    }
+                />
             </Routes>
         </div>
     );

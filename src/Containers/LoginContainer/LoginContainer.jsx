@@ -3,9 +3,12 @@ import { Button, Input } from 'antd';
 import axios from 'axios';
 import './loginContainer.css';
 import { useNavigate } from 'react-router-dom';
+import useStore from '../../store';
 
 const LoginContainer = () => {
     const navigate = useNavigate();
+    const setUserPhone = useStore((state) => state.setPhone);
+    const setRequestId = useStore((state) => state.setRequestId);
 
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
@@ -21,6 +24,8 @@ const LoginContainer = () => {
         );
         console.log('response', response.data);
         if (response.data.requestId) {
+            setUserPhone(phone);
+            setRequestId(response.data.requestId);
             setLoading(false);
             navigate('/authenticate');
         }

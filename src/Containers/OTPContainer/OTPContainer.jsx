@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './otpContainer.css';
 import axios from 'axios';
 import { Input, Space, Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import useStore from '../../store';
 
 const styles = {
     otpInput: {
@@ -15,12 +16,18 @@ const styles = {
 };
 
 const OTPContainer = () => {
+    const phoneNumber = useStore((state) => state.phone);
+    const requestId = useStore((state) => state.requestId);
+    const setRequestId = useStore((state) => state.setRequestId);
+    const setToken = useStore((state) => state.setToken);
+    console.log('zustand', phoneNumber, requestId);
     const navigate = useNavigate();
     const inputRef = useRef();
     const [otp1, setOtp1] = useState('');
     const [otp2, setOtp2] = useState('');
     const [otp3, setOtp3] = useState('');
     const [otp4, setOtp4] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const onChange = (e) => {
         console.log(e);
@@ -44,16 +51,37 @@ const OTPContainer = () => {
 
     // const handleChange
     const handleSubmit = async () => {
+        setLoading(true);
         const response = await axios.post(
-            'https://dev.api.goongoonalo.com/v1/auth/login',
+            'https://dev.api.goongoonalo.com/v1/auth/verify_otp',
             {
-                phoneNumber: '989989898',
-                requestId: '0908090809',
+                phoneNumber,
+                requestId,
                 otp: `${otp1}${otp2}${otp3}${otp4}`,
             },
         );
+        setLoading(false);
         console.log('otp resp', response);
-        // navigate('/dashboard');
+        if (response.data.token) {
+            localStorage.setItem('token', response.data.token);
+            setToken(response.data.token);
+            navigate('/dashboard');
+        }
+    };
+
+    const resendOTP = async () => {
+        setOtp1('');
+        setOtp2('');
+        setOtp3('');
+        setOtp4('');
+        const response = await axios.post(
+            'https://dev.api.goongoonalo.com/v1/auth/login',
+            { phoneNumber: phone },
+        );
+        console.log('response', response.data);
+        if (response.data.requestId) {
+            setRequestId(response.data.requestId);
+        }
     };
 
     const inputFocus = (e) => {
@@ -123,6 +151,7 @@ const OTPContainer = () => {
                         height: '50px',
                     }}
                     className="self-center"
+                    loading={loading}
                     onClick={handleSubmit}
                     type="primary"
                     size="large"
@@ -130,7 +159,9 @@ const OTPContainer = () => {
                 >
                     Verify
                 </Button>
-                <a className="otp-form-link">Resend OTP</a>
+                <a className="otp-form-link" onClick={resendOTP}>
+                    Resend OTP
+                </a>
                 <Link className="otp-form-link" to="/login">
                     Use another number
                 </Link>

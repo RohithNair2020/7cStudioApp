@@ -93,15 +93,6 @@ const data = [
         albums: '5',
         createdOn: '06/08/2000',
     },
-    {
-        key: '5',
-        artistName: 'Artist Name',
-        coreMember: 'Yes',
-        verified: 'Yes',
-        followers: '820',
-        albums: '5',
-        createdOn: '06/08/2000',
-    },
 ];
 
 const ArtistTable = () => {

@@ -18,6 +18,8 @@ const styles = {
 
 const Trackbar = () => {
     const activeSong = useStore((state) => state.activeSong);
+    const setActiveSong = useStore((state) => state.setActiveSong);
+    const songs = useStore((state) => state.songs);
     console.log('song now', activeSong);
     const [playing, setPlaying] = useState(false);
     const [position, setPosition] = useState(0);
@@ -26,21 +28,21 @@ const Trackbar = () => {
     const isReady = useRef(false);
     const { duration } = audioRef.current;
 
-    // const toPrevTrack = () => {
-    // if (trackIndex - 1 < 0) {
-    //     setTrackIndex(tracks.length - 1);
-    //   } else {
-    //     setTrackIndex(trackIndex - 1);
-    //   }
-    //   }
+    const prevTrack = () => {
+        if (songs.indexOf(activeSong) === 0) {
+            setActiveSong(songs[songs.length - 1]);
+        } else {
+            setActiveSong(songs[songs.indexOf(activeSong) - 1]);
+        }
+    };
 
-    //   const toNextTrack = () => {
-    // if (trackIndex < tracks.length - 1) {
-    //     setTrackIndex(trackIndex + 1);
-    //   } else {
-    //     setTrackIndex(0);
-    //   }
-    //   }
+    const nextTrack = () => {
+        if (songs.indexOf(activeSong) < songs.length - 1) {
+            setActiveSong(songs[songs.indexOf(activeSong) + 1]);
+        } else {
+            setActiveSong(songs[0]);
+        }
+    };
 
     const onScrub = (value) => {
         // Clear any timers already running
@@ -63,10 +65,9 @@ const Trackbar = () => {
 
         intervalRef.current = setInterval(() => {
             if (audioRef.current.ended) {
-                toNextTrack();
+                nextTrack();
             } else {
                 setPosition(audioRef.current.currentTime);
-                // position = position.current + audioRef.current.currentTime;
             }
         }, [50]);
     };
@@ -105,23 +106,6 @@ const Trackbar = () => {
         }
     }, [activeSong]);
 
-    // Handle setup when changing tracks
-    // useEffect(() => {
-    //     audioRef.current.pause();
-
-    //     audioRef.current = new Audio(audioSrc);
-    //     setTrackProgress(audioRef.current.currentTime);
-
-    //     if (isReady.current) {
-    //         audioRef.current.play();
-    //         setIsPlaying(true);
-    //         startTimer();
-    //     } else {
-    //         // Set the isReady ref as true for the next pass
-    //         isReady.current = true;
-    //     }
-    // }, [trackIndex]);
-
     return (
         <div className="trackbar-container">
             <Slider
@@ -152,10 +136,10 @@ const Trackbar = () => {
                     src={activeSong?.imgPath}
                     alt="song-cover-photo"
                 />
-                <h4 className="song-name">As It Was</h4>
+                <h4 className="song-name">{activeSong.songName}</h4>
             </div>
             <div className="song-controlls">
-                <IconButton>
+                <IconButton onClick={prevTrack}>
                     <StepBackwardOutlined style={styles.controlButtonIcon} />
                 </IconButton>
                 <IconButton onClick={() => setPlaying(!playing)}>
@@ -165,7 +149,7 @@ const Trackbar = () => {
                         <CaretRightOutlined style={styles.controlButtonIcon} />
                     )}
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={nextTrack}>
                     <StepForwardOutlined style={styles.controlButtonIcon} />
                 </IconButton>
             </div>

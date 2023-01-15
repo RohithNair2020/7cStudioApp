@@ -79,7 +79,7 @@ const SongsTable = () => {
         {
             title: '',
             key: 'delete',
-            render: (_, __, index) => (
+            render: () => (
                 <IconButton onClick={() => {}}>
                     <DeleteOutlined style={{ fontSize: 'medium' }} />
                 </IconButton>
@@ -89,7 +89,12 @@ const SongsTable = () => {
 
     return (
         <div className="songs-table-container">
-            <Table columns={columns} dataSource={songs} />;
+            <Table
+                pagination={{ pageSize: 5, total: songs.length }}
+                columns={columns}
+                dataSource={songs}
+            />
+            ;
         </div>
     );
 };

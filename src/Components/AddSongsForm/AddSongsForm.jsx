@@ -2,7 +2,7 @@ import { DeleteOutline } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { Button, Form, Input } from 'antd';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import useStore from '../../store';
 
 const AddSongsForm = (props) => {
@@ -11,7 +11,7 @@ const AddSongsForm = (props) => {
     const [image, setImage] = useState(null);
     const [imageName, setImageName] = useState('');
     const addSong = useStore((state) => state.addSong);
-    const songs = useStore((state) => state.songs);
+    const formRef = useRef();
     const removePhoto = () => {
         setImage(null);
     };
@@ -26,6 +26,8 @@ const AddSongsForm = (props) => {
             ...values,
             imgPath: image ? URL.createObjectURL(image) : '',
         });
+        setImage(null);
+        formRef.current?.resetFields();
         onClose();
     };
 
@@ -39,7 +41,12 @@ const AddSongsForm = (props) => {
             <h2 className="form-title" style={{ marginBottom: '20px' }}>
                 Add Song
             </h2>
-            <Form layout="vertical" form={form} onFinish={onSubmit}>
+            <Form
+                ref={formRef}
+                layout="vertical"
+                form={form}
+                onFinish={onSubmit}
+            >
                 <Form.Item label="Song Name" name="songName">
                     <Input placeholder="Song Name" />
                 </Form.Item>

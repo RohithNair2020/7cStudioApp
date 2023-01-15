@@ -4,9 +4,12 @@ import { Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import DashboardContainer from '../DashboardContainer/DashboardContainer';
 import ArtistsContainer from '../ArtistsContainer/ArtistsContainer';
 import { Breadcrumbs, Collapse, Link } from '@mui/material';
+import useStore from '../../store';
+import Trackbar from '../../Components/Trackbar/Trackbar';
 
 const PageContainer = () => {
     const [open, setOpen] = React.useState(false);
+    const activeSong = useStore((state) => state.activeSong);
     const { pathname } = useLocation();
     console.log('pathname', pathname);
 
@@ -62,6 +65,9 @@ const PageContainer = () => {
                 </div>
             </Collapse>
             <Outlet />
+            <Collapse in={activeSong}>
+                <Trackbar />
+            </Collapse>
         </div>
     );
 };

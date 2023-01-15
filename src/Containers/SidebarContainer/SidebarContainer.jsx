@@ -14,6 +14,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import useStore from '../../store';
+import { IconButton } from '@mui/material';
 
 const SidebarContainer = () => {
     const [contentOpen, setContentOpen] = useState(false);
@@ -145,11 +146,21 @@ const SidebarContainer = () => {
                     </List>
                 </Collapse>
             </List>
-            <ListItemButton onClick={logout}>
-                <ListItemIcon>
-                    <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
+            <ListItemButton
+                style={{
+                    padding: '20px',
+                    position: 'absolute',
+                    bottom: '0',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '10px',
+                }}
+                onClick={logout}
+            >
+                <LogoutIcon />
+                <p>Log out</p>
+                {/* <ListItemText primary="Log out" /> */}
             </ListItemButton>
         </div>
     );

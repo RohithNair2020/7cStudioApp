@@ -17,6 +17,10 @@
     text-decoration: none;
 }
 
+.logout-button {
+    height: 50px;
+}
+
 .stick-to-bottom {
     position: absolute;
     bottom: 0;

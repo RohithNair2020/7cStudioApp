@@ -1,55 +1,9 @@
 import React from 'react';
 import './songsTable.css';
-import { Space, Table, Tag } from 'antd';
-
-const columns = [
-    {
-        title: 'SONG NAME',
-        dataIndex: 'songName',
-        key: 'songName',
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: 'SOURCE',
-        dataIndex: 'source',
-        key: 'source',
-    },
-    {
-        title: 'ADDED ON',
-        dataIndex: 'addedOn',
-        key: 'addedOn',
-    },
-    {
-        title: '',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: '',
-        key: 'action',
-        render: (_, record) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-        ),
-    },
-];
+import { DeleteOutlined, PlayCircleFilled } from '@ant-design/icons';
+import { Table } from 'antd';
+import { IconButton } from '@mui/material';
+import useStore from '../../store';
 
 const data = [
     {
@@ -57,28 +11,85 @@ const data = [
         songName: 'As It Was',
         source: 'Youtube',
         addedOn: '06/08/2000',
-        tags: ['nice', 'developer'],
     },
     {
         key: '2',
         songName: 'As It Was',
         source: 'Youtube',
         addedOn: '06/08/2000',
-        tags: ['nice', 'developer'],
     },
     {
         key: '3',
         songName: 'As It Was',
         source: 'Youtube',
         addedOn: '06/08/2000',
-        tags: ['nice', 'developer'],
+    },
+    {
+        key: '4',
+        songName: 'As It Was',
+        source: 'Youtube',
+        addedOn: '06/08/2000',
+    },
+    {
+        key: '5',
+        songName: 'As It Was',
+        source: 'Youtube',
+        addedOn: '06/08/2000',
+    },
+    {
+        key: '6',
+        songName: 'As It Was',
+        source: 'Youtube',
+        addedOn: '06/08/2000',
     },
 ];
 
 const SongsTable = () => {
+    const songs = useStore((state) => state.songs);
+    const setActiveSong = useStore((state) => state.setActiveSong);
+
+    const columns = [
+        {
+            title: 'SONG NAME',
+            dataIndex: 'songName',
+            key: 'songName',
+            render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'SOURCE',
+            dataIndex: 'source',
+            key: 'source',
+        },
+        {
+            title: 'ADDED ON',
+            dataIndex: 'addedOn',
+            key: 'addedOn',
+        },
+        {
+            title: '',
+            key: 'play',
+            render: (_, __, index) => (
+                <IconButton onClick={() => setActiveSong(songs[index])}>
+                    <PlayCircleFilled
+                        style={{ fontSize: '30px', color: '#fdb927' }}
+                    />
+                </IconButton>
+            ),
+        },
+        {
+            title: '',
+            key: 'delete',
+            render: (_, __, index) => (
+                <IconButton onClick={() => {}}>
+                    <DeleteOutlined style={{ fontSize: 'medium' }} />
+                </IconButton>
+            ),
+        },
+    ];
+
     return (
         <div className="songs-table-container">
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={songs} />;
         </div>
     );
 };

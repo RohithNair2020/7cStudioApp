@@ -136,7 +136,7 @@ const Trackbar = () => {
                     src={activeSong?.imgPath}
                     alt="song-cover-photo"
                 />
-                <h4 className="song-name">{activeSong.songName}</h4>
+                <h4 className="song-name">{activeSong?.songName}</h4>
             </div>
             <div className="song-controlls">
                 <IconButton onClick={prevTrack}>

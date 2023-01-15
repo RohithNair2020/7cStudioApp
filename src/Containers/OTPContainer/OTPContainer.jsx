@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './otpContainer.css';
 import axios from 'axios';
 import { Input, Space, Button } from 'antd';
@@ -22,7 +22,6 @@ const OTPContainer = () => {
     const setToken = useStore((state) => state.setToken);
     console.log('zustand', phoneNumber, requestId);
     const navigate = useNavigate();
-    const inputRef = useRef();
     const [otp1, setOtp1] = useState('');
     const [otp2, setOtp2] = useState('');
     const [otp3, setOtp3] = useState('');
@@ -84,21 +83,21 @@ const OTPContainer = () => {
         }
     };
 
-    const inputFocus = (e) => {
-        if (e.key === 'Delete' || e.key === 'Backspace') {
-            const next = e.target.tabIndex - 2;
-            if (next > -1) {
-                e.target.form.elements[next].focus();
-            }
-        } else {
-            console.log('next');
+    // const inputFocus = (e) => {
+    //     if (e.key === 'Delete' || e.key === 'Backspace') {
+    //         const next = e.target.tabIndex - 2;
+    //         if (next > -1) {
+    //             e.target.form.elements[next].focus();
+    //         }
+    //     } else {
+    //         console.log('next');
 
-            const next = e.target.tabIndex;
-            if (next < 4) {
-                e.target.form.elements[next].focus();
-            }
-        }
-    };
+    //         const next = e.target.tabIndex;
+    //         if (next < 4) {
+    //             e.target.form.elements[next].focus();
+    //         }
+    //     }
+    // };
 
     return (
         <div className="otp-container">
@@ -116,7 +115,7 @@ const OTPContainer = () => {
                         maxLength={1}
                         style={styles.otpInput}
                         onChange={onChange}
-                        onKeyUp={inputFocus}
+                        // onKeyUp={inputFocus}
                     />
                     <Input
                         size="large"
@@ -125,7 +124,7 @@ const OTPContainer = () => {
                         maxLength={1}
                         style={styles.otpInput}
                         onChange={onChange}
-                        onKeyUp={inputFocus}
+                        // onKeyUp={inputFocus}
                     />
                     <Input
                         size="large"

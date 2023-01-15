@@ -34,6 +34,11 @@
     align-items: center;
 }
 
+.chart-list-item-small {
+    display: flex;
+    flex-direction: column;
+}
+
 .chart-list-item-image {
     color: var(--app-text-lighter);
     border: 10px solid rgba(128, 128, 128, 0.17);

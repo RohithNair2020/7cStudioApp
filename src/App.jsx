@@ -7,7 +7,6 @@ import DashboardContainer from './Containers/DashboardContainer/DashboardContain
 import ArtistsContainer from './Containers/ArtistsContainer/ArtistsContainer';
 import SongsContainer from './Containers/SongsContainer/SongsContainer';
 import OTPContainer from './Containers/OTPContainer/OTPContainer';
-import { useEffect, useState } from 'react';
 import useStore from './store';
 
 function App() {
@@ -28,9 +27,6 @@ function App() {
                     }
                 />
                 <Route path="/authenticate" element={<OTPContainer />} />
-                {/* <PrivateRoute user={{ token: localStorage.getItem('token') }}>
-                    <AppContainer user={user} />
-                </PrivateRoute> */}
                 <Route
                     path="/dashboard"
                     element={
